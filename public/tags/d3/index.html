@@ -49,8 +49,14 @@ body {
 
 
 
-<script>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-128595985-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-128595985-1');
 </script>
 
 
@@ -59,16 +65,16 @@ body {
 
 
 <body>
-<header class="container no-print">
+<header>
 	<div class="u-header">
 		<nav class="bar">
 	    <ul>
 	      
           <li><a href="/">Blog</a></li>
         
-          <li><a href="/projects/">Projects</a></li>
-        
           <li><a href="/about/">About</a></li>
+        
+          <li><a href="/projects/">Projects</a></li>
         
           <li><a href="/docs/paul_campbell_cv_2018.pdf">CV</a></li>
         

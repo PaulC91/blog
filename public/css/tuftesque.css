@@ -59,7 +59,7 @@ label.margin-toggle {
 
 .social_links a {
   line-height: 2.5em;
-  padding-left: 8px;
+  padding-right: 8px;
   text-decoration: none;
   background: none !important;
 }
@@ -166,6 +166,7 @@ label.margin-toggle {
 #homepage{
   margin: 0 auto;
   color: #111111;
+  width: 95%;
 }
 
 #homepage a {
@@ -175,7 +176,7 @@ label.margin-toggle {
 @media only screen and (max-width: 550px) {
   body {
     width: 100% !important;
-    padding-left: 5% !important;
+    padding: 5% !important;
   }
 }
 

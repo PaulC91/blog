@@ -14,7 +14,7 @@ I've been using R & shiny for a couple of years now. By default, that means I've
 
 With that in mind, I thought it was about time I built one of my own in an attempt to provide something useful and easy to use for R/Shiny developers. `shinyauthr` is the result of that. It is a package providing module functions that can be used to add an authentication layer to your shiny apps.
 
-It borrows some code from treysp's [shiny_password](https://github.com/treysp/shiny_password) template with the goal of making implementation simpler for end users and allowing the login/logout UIs to fit easily into any UI framework, including [shinydashboard](https://rstudio.github.io/shinydashboard/) (see example below).
+Some of the module code is adapted from treysp's [shiny_password](https://github.com/treysp/shiny_password) template with the goal of making implementation simpler for end users and allowing the login/logout UIs to fit easily into any UI framework, including [shinydashboard](https://rstudio.github.io/shinydashboard/) (see example below).
 
 ---
 
