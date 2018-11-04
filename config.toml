@@ -1,8 +1,8 @@
-baseurl = "/"
+baseurl = "https://paulcampbell.netlify.com/"
 languageCode = "en-us"
 title = "Paul Campbell"
 theme = "tuftesque"
-googleAnalytics = ""
+googleAnalytics = "UA-128595985-1"
 disqusShortname = "paulsblog-2"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
