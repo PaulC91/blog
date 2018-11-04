@@ -1,0 +1,32 @@
+{{ partial "header.html" . }}
+<body>
+<style>
+  body {
+    padding-left: 0 !important;
+    padding-top: 10px;
+  }
+  p {
+    width: 100%;
+  }
+</style>
+<div id="homepage">
+{{ partial "author.html" . }}
+{{ partial "nav.html" . }}
+{{ partial "banner.html" . }}
+
+{{ range .Site.Pages }}
+  {{if eq .Type "post" }}
+    {{if eq .Title "Posts"}}
+      <h3><a href="{{ .RelPermalink | relURL }}">See all posts</a></h3>
+    {{else}}
+      {{ partial "content.header.html" . }}
+      <p>{{ .Params.excerpt }}</p>
+      <p><a href="{{ .RelPermalink | relURL }}">Read On &rarr;</a></p>
+      <hr>
+    {{ end  }}
+  {{ end }}
+{{ end  }}
+{{ partial "footer.html" . }}
+</div>
+</body>
+</html>

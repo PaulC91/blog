@@ -1,0 +1,14 @@
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	    <ul>
+	      {{ range .Site.Menus.main }}
+          <li><a href="{{ .URL | relURL }}">{{ .Name | safeHTML }}</a></li>
+        {{ end }}
+        <li><a href="/tags"><i class="fa fa-tags fa-lg" title="tags"></i></a></li>
+	      <li><a href="/index.xml"><i class="fa fa-rss fa-lg" title="RSS"></i></a></li>
+	    </ul>
+    </nav>
+  </div>
+</header>
+<hr/>

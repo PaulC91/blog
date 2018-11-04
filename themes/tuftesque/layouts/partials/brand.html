@@ -1,0 +1,19 @@
+
+<header class="brand">
+  <nav>
+    <ul class="menu">
+      <li><a href='/about'>About</a></li>
+    	<li><a href='/projects'>Projects</a></li>
+    	<li><a href='/tags'>Tags</a></li>
+    	<li><a class="cta" href="/index.xml">Subscribe</a></li>
+    </ul>
+      {{if .IsHome}}
+        {{if .Site.Params.showtitle}}
+          <span id = "blog_title">
+            {{.Site.Title}}
+          </span>
+        {{end}}
+      {{end}}
+  </nav>
+</header>
+<hr/>

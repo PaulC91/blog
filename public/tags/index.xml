@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Paul Campbell</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on Paul Campbell</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 01 Mar 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>D3</title>
+      <link>/tags/d3/</link>
+      <pubDate>Thu, 01 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/d3/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Htmlwidgets</title>
+      <link>/tags/htmlwidgets/</link>
+      <pubDate>Thu, 01 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/htmlwidgets/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Packages</title>
+      <link>/tags/packages/</link>
+      <pubDate>Sun, 04 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/packages/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Purrr</title>
+      <link>/tags/purrr/</link>
+      <pubDate>Thu, 01 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/purrr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tidygraph</title>
+      <link>/tags/tidygraph/</link>
+      <pubDate>Thu, 01 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/tidygraph/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

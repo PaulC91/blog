@@ -1,0 +1,51 @@
+<footer class="page-footer">
+		<hr>
+		<ul class="page-footer-menu">
+		{{ range .Site.Menus.footer }}
+      <li><a href="{{.URL | relURL}}">{{.Pre }}{{ .Name }}</a></li>
+		{{ end }}
+		</ul>
+
+  {{ if .Site.Params.showPoweredBy}}
+      <span class = "social_links">
+        
+        <a class = "social_buttons" href = "mailto:pacampbell91@gmail.com" >
+            <i class="fa fa-envelope fa-2x"></i>
+        </a>
+
+        <a class = "social_buttons" href = "https://twitter.com/paulcampbell91" >
+            <i class="fa fa-twitter fa-2x"></i>
+        </a>
+
+        <a class="social_buttons" href = "https://github.com/paulc91">
+          <i class="fa fa-github fa-2x"></i>
+        </a>
+
+        <a class = "social_buttons" href = "https://www.linkedin.com/in/paul-campbell-792425123/" >
+          <i class="fa fa-linkedin fa-2x"></i>
+        </a>
+
+    </span>
+  {{ end }}
+
+	<div class="copyright">
+	<p>
+    {{ with .Site.Params.copyright }}
+      {{ . | safeHTML }}
+    {{ else }}
+      &copy;{{now.Format "2006"}} Paul Campbell. All rights reserved.
+    {{ with .Site.Params.copyrightHolder }}{{ . }}{{end}}
+    {{end}}
+  </p>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    </script>
+    <script type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</footer>

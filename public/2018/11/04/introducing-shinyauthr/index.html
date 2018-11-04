@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+<head>
+<title>Introducing shinyauthr</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Paul Campbell">
+<meta name="generator" content="Hugo 0.31" />
+
+  
+<link rel="stylesheet" href="/css/androidstudio.css" id="theme-stylesheet">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Spectral:300,400,500,700">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="/css/tuftesque.css">
+<style>
+body {
+  
+    background-color:  #f5f5f5;
+  
+}
+</style>
+
+
+
+<script>
+
+</script>
+
+
+</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	    <ul>
+	      
+          <li><a href="/">Blog</a></li>
+        
+          <li><a href="/projects/">Projects</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/docs/paul_campbell_cv_2018.pdf">CV</a></li>
+        
+          <li><a href="/categories/"><i class='fa fa-list-alt fa-lg' title='categories'></i></a></li>
+        
+        <li><a href="/tags"><i class="fa fa-tags fa-lg" title="tags"></i></a></li>
+	      <li><a href="/index.xml"><i class="fa fa-rss fa-lg" title="RSS"></i></a></li>
+	    </ul>
+    </nav>
+  </div>
+</header>
+<hr/>
+<div id="layout" class="pure-g">
+<article class="pure-u-1">
+<section>
+  <h1 class="content-title">
+  
+  <a href="/2018/11/04/introducing-shinyauthr/">Introducing shinyauthr</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Paul Campbell</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Nov 4, 2018
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;5 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="/categories/r">R</a>
+    
+    <a  href="/categories/shiny">Shiny</a>
+    
+    
+    </span>
+    
+    
+    </section>
+
+
+<section><p>I’ve been using R &amp; shiny for a couple of years now. By default, that means I’ve been taking advantage of the countless open-source packages provided by the generous community of R developers. The ever-growing number of packages is making it possible to do just about anything you’d want to with R which is making someone like myself’s job easier and easier every day - so thanks to all the package developers for their efforts!</p>
+<p>With that in mind, I thought it was about time I built one of my own in an attempt to provide something useful and easy to use for R/Shiny developers. <code>shinyauthr</code> is the result of that. It is a package providing module functions that can be used to add an authentication layer to your shiny apps.</p>
+<p>It borrows some code from treysp’s <a href="https://github.com/treysp/shiny_password">shiny_password</a> template with the goal of making implementation simpler for end users and allowing the login/logout UIs to fit easily into any UI framework, including <a href="https://rstudio.github.io/shinydashboard/">shinydashboard</a> (see example below).</p>
+<hr />
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p>Install the package from github with <code>devtools</code>.</p>
+<pre class="r"><code>devtools::install_github(&quot;paulc91/shinyauthr&quot;)</code></pre>
+<hr />
+</div>
+<div id="example" class="section level2">
+<h2>Example</h2>
+<p>Below is a live example of shinyauthr in action within a shinydashboard UI.</p>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.min.js"></script>
+<style>
+  iframe {
+    min-width: 100%;
+  }
+</style>
+<iframe id="myIframe" src="https://cultureofinsight.shinyapps.io/shinyauthr/" scrolling="no" frameborder="no">
+</iframe>
+<script>
+  iFrameResize({
+    heightCalculationMethod: 'taggedElement'
+  });
+</script>
+<hr />
+</div>
+<div id="usage" class="section level2">
+<h2>Usage</h2>
+<p>The package provides 2 module functions each with a UI and server element:</p>
+<ul>
+<li><code>login</code></li>
+<li><code>loginUI</code></li>
+<li><code>logout</code></li>
+<li><code>logoutUI</code></li>
+</ul>
+<p>Below is a minimal reproducible example of how to use the authentication modules in a shiny app. Note that you must initiate the use of the shinyjs package with <code>shinyjs::useShinyjs()</code> in your UI code for this to work appropriately.</p>
+<pre class="r"><code>library(shiny)
+library(shinyauthr)
+library(shinyjs)
+
+# dataframe that holds usernames, passwords and other user data
+user_base &lt;- data.frame(
+  user = c(&quot;user1&quot;, &quot;user2&quot;),
+  password = c(&quot;pass1&quot;, &quot;pass2&quot;), 
+  permissions = c(&quot;admin&quot;, &quot;standard&quot;),
+  name = c(&quot;User One&quot;, &quot;User Two&quot;),
+  stringsAsFactors = FALSE
+)
+
+ui &lt;- fluidPage(
+  # must turn shinyjs on
+  shinyjs::useShinyjs(),
+  # add logout button UI 
+  div(class = &quot;pull-right&quot;, shinyauthr::logoutUI(id = &quot;logout&quot;)),
+  # add login panel UI function
+  shinyauthr::loginUI(id = &quot;login&quot;),
+  # setup table output to show user info after login
+  tableOutput(&quot;user_table&quot;)
+)
+
+server &lt;- function(input, output, session) {
+  
+  # call the logout module with reactive trigger to hide/show
+  logout_init &lt;- callModule(shinyauthr::logout, 
+                            id = &quot;logout&quot;, 
+                            active = reactive(credentials()$user_auth))
+  
+  # call login module supplying data frame, user and password cols
+  # and reactive trigger
+  credentials &lt;- callModule(shinyauthr::login, 
+                            id = &quot;login&quot;, 
+                            data = user_base,
+                            user_col = user,
+                            pwd_col = password,
+                            log_out = reactive(logout_init()))
+  
+  # pulls out the user information returned from login module
+  user_data &lt;- reactive({credentials()$info})
+  
+  output$user_table &lt;- renderTable({
+    # use req to only render results when credentials()$user_auth is TRUE
+    req(credentials()$user_auth)
+    user_data()
+  })
+}
+
+shinyApp(ui = ui, server = server)</code></pre>
+<hr />
+</div>
+<div id="details" class="section level2">
+<h2>Details</h2>
+<p>When the login module is called, it returns a reactive list containing 2 elements:</p>
+<ul>
+<li><code>user_auth</code></li>
+<li><code>info</code></li>
+</ul>
+<p>The initial values of these variables are <code>FALSE</code> and <code>NULL</code> respectively. However, given a data frame or tibble containing user names, passwords and other user data (optional), the login module will assign a <code>user_auth</code> value of <code>TRUE</code> if the user supplies a matching user name and password. The value of <code>info</code> then becomes the row of data associated with that user which can be used in the main to control content based on user permission variables etc.</p>
+<p>The logout button will only show when <code>user_auth</code> is <code>TRUE</code>. Clicking the button will reset <code>user_auth</code> back to <code>FALSE</code> which will hide the button and show the login panel again.</p>
+<p>You can set the code in your server functions to only run after a successful login through use of the <code>req()</code> function inside all reactives, renders and observers. In the example above, using <code>req(credentials()$user_auth)</code> inside the <code>renderTable</code> function ensures the table showing the returned user information is only rendered when <code>user_auth</code> is <code>TRUE</code>.</p>
+<hr />
+</div>
+<div id="hashing-passwords-with-digest" class="section level2">
+<h2>Hashing Passwords with digest</h2>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Note: your plain text passwords must be a character vector, not factors, prior to hashing for this to work as shiny inputs are passed as character strings.</span></p>
+<p>If you are hosting your user passwords on the internet, it is a good idea to first encrypt them with a hashing algorithm. You can use the <a href="https://github.com/eddelbuettel/digests">digest package</a> to do this. You can then tell the <code>shinyauthr::login</code> module that your passwords are hashed and what algorithm you used when hashing with digest.</p>
+<p>For example, a sample user base like the following can be incorporated for use with <code>shinyauthr</code>:</p>
+<pre class="r"><code># create a user base then hash passwords with md5 algorithm
+# then save to an rds file in app directory
+library(digest)
+
+user_base &lt;- data.frame(
+  user = c(&quot;user1&quot;, &quot;user2&quot;),
+  password = sapply(c(&quot;pass1&quot;, &quot;pass2&quot;), digest, &quot;md5&quot;), 
+  permissions = c(&quot;admin&quot;, &quot;standard&quot;),
+  name = c(&quot;User One&quot;, &quot;User Two&quot;),
+  stringsAsFactors = FALSE
+)
+
+saveRDS(user_base, &quot;user_base.rds&quot;)</code></pre>
+<pre class="r"><code># in your app code, read in the user base rds file
+user_base &lt;- readRDS(&quot;user_base.rds&quot;)</code></pre>
+<pre class="r"><code># then when calling the module, set hashed = TRUE and algo = &quot;md5&quot;
+credentials &lt;- callModule(shinyauthr::login, &quot;login&quot;, 
+                          data = user_base,
+                          user_col = user,
+                          pwd_col = password,
+                          hashed = TRUE,
+                          algo = &quot;md5&quot;,
+                          log_out = reactive(logout_init()))</code></pre>
+<hr />
+</div>
+<div id="use-cases" class="section level2">
+<h2>Use Cases</h2>
+<p>This isn’t an attempt at a substitute for any of RStudio’s excellent commercial shiny hosting platforms that provide built-in authentication. If you are a company or organisation looking for a secure on-premise solution, definitely opt for one of those.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">A Professional shinyapps.io plan could be used in this use-case but I’ve found managing a significant number of users with this to be a little cumbersome and there is currently no https support for custom domains.</span></p>
+<p>However, there are some cases where these options may not be appropriate or feasible. One-off applications for an external client for example, may require authentication and user permissions that control in-app content. Having the option of deploying the app on VM with Shiny Server Open Source and controlling authentication and user permissions with <code>shinyauthr</code> could be a viable, cost-effective solution.</p>
+<hr />
+</div>
+<div id="disclaimer" class="section level2">
+<h2>Disclaimer</h2>
+<p>I’m not a security professional so cannot guarantee this authentication procedure to be foolproof. It is ultimately the shiny app developer’s responsibility not to expose any sensitive content to the client without the necessary login criteria being met.</p>
+<p>I would welcome any feedback on any potential vulnerabilities in the process. I know that apps hosted on a server without an SSL certificate could be open to interception of usernames and passwords submitted by a user. As such I would not recommend the use of shinyauthr without an HTTPS connection.</p>
+<hr />
+</div>
+<div id="fin" class="section level2">
+<h2>fin</h2>
+<p>That’s all for now. Issues and pull requests welcome over on the <a href="https://github.com/paulc91/shinyauthr">github repo</a>.</p>
+<p><em>a dopo!</em></p>
+</div>
+</section>
+<section>
+<hr/>
+  
+
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    <div class="author_blurb">
+        <div class="author_photo">
+          <div class="photo">
+            <a href="/">
+              <img style = "border-radius: 25px;" src="/img/paul_square.png" alt="Paul Campbell image" width="90" height="90">
+            </a>
+          </div>
+        </div>
+        <div class = "author_info">
+          <div class = "contact_info">
+              <span class = "name"> 
+                Paul Campbell 
+              </span>
+          </div>
+          <div>
+            <span class = "social_links">
+                
+                  <a class="social_buttons" href = https://twitter.com/paulcampbell91>
+                    <i class="fa fa-twitter fa-lg"></i>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = https://github.com/paulc91/ >
+                    <i class="fa fa-github fa-lg"></i>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = https://www.linkedin.com/in/paulcampbell91/ >
+                    <i class="fa fa-linkedin fa-lg"></i>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = mailto:pacampbell91@gmail.com >
+                    <i class="fa fa-envelope fa-lg"></i>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = https://www.cultureofinsight.com >
+                      <i class="fa fa-globe fa-lg"></i>
+                  </a>
+                
+              </span> 
+          </div>
+          <div class = "bio">
+            
+            <span>R | Data | Visualisation</span>
+              
+          </div>
+        </div>
+      </div>
+    
+  
+  
+
+
+
+  
+
+
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+       
+      var disqus_shortname = "paulsblog-2" 
+      var disqus_identifier = '\/2018\/11\/04\/introducing-shinyauthr\/';
+       
+      (function() {
+          if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+              document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+              return;
+          }
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+      
+  <footer class="page-footer">
+		<hr>
+		<ul class="page-footer-menu">
+		
+		</ul>
+
+  
+
+	<div class="copyright">
+	<p>
+    
+      &copy;2018 Paul Campbell. All rights reserved.
+    
+    
+  </p>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    </script>
+    <script type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</footer>
+
+</section>
+</article>
+</div>
+</body>
+</html>

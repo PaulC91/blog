@@ -1,0 +1,404 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+<head>
+<title>Hello Tuftesque</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Paul Campbell">
+<meta name="generator" content="Hugo 0.27.1" />
+
+  
+<link rel="stylesheet" href="/css/solarized-dark.css" id="theme-stylesheet">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="/css/tuftesque.css">
+<style>
+body {
+  
+    background-color:  #f5f5f5;
+  
+}
+</style>
+
+
+
+<script>
+
+</script>
+
+
+</head>
+
+<body>
+
+
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	    <ul>
+	      
+          <li><a href="/">Blog</a></li>
+        
+          <li><a href="/projects/">Projects</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/categories/">Categories</a></li>
+        
+          <li><a href="/tags/">Tags</a></li>
+        
+	      <li><a href="/index.xml"><i class="fa fa-rss fa-lg"></i></a></li>
+	    </ul>
+    </nav>
+  </div>
+</header>
+<hr/>
+<div id="layout" class="pure-g">
+<article class="pure-u-1">
+<section>
+  <h1 class="content-title">
+  
+  <a href="/2017/10/15/hello-tuftesque/">Hello Tuftesque</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Oct 15, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;7 min read
+  
+  
+  
+    </span>
+    
+    
+    </section>
+
+
+<section><script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/plotly-binding/plotly.js"></script>
+<script src="/rmarkdown-libs/typedarray/typedarray.min.js"></script>
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="/rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="/rmarkdown-libs/plotlyjs/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/plotlyjs/plotly-latest.min.js"></script>
+
+
+<p><em>This is an abridged version of the blogpost <a href="http://livefreeordichotomize.com/2017/07/13/introducing-the-tuftesque-blogdown-theme/">Introducing The Tuftesque Blogdown Theme</a> on <a href="livefreeordichotomize.com" class="uri">livefreeordichotomize.com</a>.</em></p>
+<div id="customizing" class="section level1">
+<h1>Customizing</h1>
+<p>It would be pretty lame if that was it, wouldn’t it? Fear not, you can tinker with it to make it your own.</p>
+<pre class="r fullwidth"><code>library(plotly)</code></pre>
+<pre><code>## Warning: package &#39;plotly&#39; was built under R version 3.4.3</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plotly&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     last_plot</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter</code></pre>
+<pre><code>## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     layout</code></pre>
+<pre class="r fullwidth"><code>library(ggplot2)
+
+#head(mtcars)
+
+p &lt;- ggplot(mtcars, aes(disp, drat)) +
+  geom_point() +
+  theme_minimal()
+
+ggplotly(p)</code></pre>
+<div id="17e0282118f2" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="17e0282118f2">{"x":{"data":[{"x":[160,160,108,258,360,225,360,146.7,140.8,167.6,167.6,275.8,275.8,275.8,472,460,440,78.7,75.7,71.1,120.1,318,304,350,400,79,120.3,95.1,351,145,301,121],"y":[3.9,3.9,3.85,3.08,3.15,2.76,3.21,3.69,3.92,3.92,3.92,3.07,3.07,3.07,2.93,3,3.23,4.08,4.93,4.22,3.7,2.76,3.15,3.73,3.08,4.08,4.43,3.77,4.22,3.62,3.54,4.11],"text":["disp: 160.0<br />drat: 3.90","disp: 160.0<br />drat: 3.90","disp: 108.0<br />drat: 3.85","disp: 258.0<br />drat: 3.08","disp: 360.0<br />drat: 3.15","disp: 225.0<br />drat: 2.76","disp: 360.0<br />drat: 3.21","disp: 146.7<br />drat: 3.69","disp: 140.8<br />drat: 3.92","disp: 167.6<br />drat: 3.92","disp: 167.6<br />drat: 3.92","disp: 275.8<br />drat: 3.07","disp: 275.8<br />drat: 3.07","disp: 275.8<br />drat: 3.07","disp: 472.0<br />drat: 2.93","disp: 460.0<br />drat: 3.00","disp: 440.0<br />drat: 3.23","disp:  78.7<br />drat: 4.08","disp:  75.7<br />drat: 4.93","disp:  71.1<br />drat: 4.22","disp: 120.1<br />drat: 3.70","disp: 318.0<br />drat: 2.76","disp: 304.0<br />drat: 3.15","disp: 350.0<br />drat: 3.73","disp: 400.0<br />drat: 3.08","disp:  79.0<br />drat: 4.08","disp: 120.3<br />drat: 4.43","disp:  95.1<br />drat: 3.77","disp: 351.0<br />drat: 4.22","disp: 145.0<br />drat: 3.62","disp: 301.0<br />drat: 3.54","disp: 121.0<br />drat: 4.11"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.2283105022831,"r":7.30593607305936,"b":40.1826484018265,"l":43.1050228310502},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"type":"linear","autorange":false,"range":[51.055,492.045],"tickmode":"array","ticktext":["100","200","300","400"],"tickvals":[100,200,300,400],"categoryorder":"array","categoryarray":["100","200","300","400"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":"disp","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"type":"linear","autorange":false,"range":[2.6515,5.0385],"tickmode":"array","ticktext":["3.0","3.5","4.0","4.5","5.0"],"tickvals":[3,3.5,4,4.5,5],"categoryorder":"array","categoryarray":["3.0","3.5","4.0","4.5","5.0"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":"drat","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"source":"A","attrs":{"17e0701c28b2":{"x":{},"y":{},"type":"scatter"}},"cur_data":"17e0701c28b2","visdat":{"17e0701c28b2":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1}},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":{"render":[{"code":"function(el, x) { var ctConfig = crosstalk.var('plotlyCrosstalkOpts').set({\"on\":\"plotly_click\",\"persistent\":false,\"dynamic\":false,\"selectize\":false,\"opacityDim\":0.2,\"selected\":{\"opacity\":1}}); }","data":null}]}}</script>
+<pre class="r"><code>guide_tinker =  guide_legend(
+  title.position = &quot;top&quot;,
+  label.position=&quot;bottom&quot;,
+  label.hjust = 0.5,
+  direction = &quot;horizontal&quot;,
+  keywidth = 1,
+  nrow = 1 )
+
+colourCount = interpolated_swings$swing_in_5s %&gt;% unique() %&gt;% length()
+palette = colorRampPalette(brewer.pal(9, &quot;YlGnBu&quot;))(colourCount)
+
+interpolated_swings %&gt;% 
+  mutate(swing_in_5s = factor(round(swing_in_5s)))%&gt;% 
+  ggplot(aes(x = lon, y = lat)) + 
+  geom_raster( aes(fill = swing_in_5s)) +
+  scale_fill_manual(values = palette, 
+                    guide = guide_tinker)  +
+  xlim(-130,-67) + ylim(24,50) +
+  theme_void() +
+  theme(
+    text = element_text(family = &#39;Montserrat&#39;),
+    legend.justification = c(0,0),
+    legend.position = c(0,0.02),
+    legend.title = element_text(size = 10),
+    legend.text = element_text(size = 8),
+    legend.box.background = element_rect(fill = &#39;#f0f0f0&#39;, color = NA)
+  ) + 
+  labs(
+    title = &quot;The United States of Seasons&quot;,
+    subtitle = &quot;Difference between the hottest and coldest days of the year&quot;,
+    fill = &quot;Temp swing in degrees&quot;) +
+  borders(&#39;state&#39;, alpha = 0.1, size = 0.1)</code></pre>
+<div id="side-notes" class="section level2">
+<h2>Side Notes:</h2>
+<p>We all know why you’re here: the sidenotes. This is rather easy. Just make sure you have the <code>tufte</code> package installed and then, in an inline r chunk, wherever you want to put a side note call the following.</p>
+<pre><code>tufte::margin_note(&quot;This is a margin note&quot;)</code></pre>
+<p>The above produces the following: <label for="tufte-mn-" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">This is a margin note</span></p>
+<p>You can place just about anything in this that you would normally put in markdown so go crazy.</p>
+</div>
+<div id="summary-text" class="section level2">
+<h2>Summary Text:</h2>
+<p>You can place a description of a post on the home page to give your readers a little bit more info on what a post is about. To do this just add the field <code>excerpt</code> to your posts header:</p>
+<p><label for="tufte-mn-" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">This is the header of this article. The except shows up on the home page.</span></p>
+<pre><code>title: &quot;Introducing the tuftesque blogdown theme&quot;
+author: &quot;Nick Strayer&quot;
+date: &#39;2017-07-13&#39;
+categories: [&quot;R&quot;]
+tags: [&quot;Blogdown&quot;, &quot;regression&quot;]
+excerpt: &quot;Our blog&#39;s theme started as the theme hugo-tufte but has sense been modified a lot. I&#39;ve been asked to put it up as a theme for other to use, here it is!&quot;</code></pre>
+</div>
+<div id="logo" class="section level2">
+<h2>Logo</h2>
+<p>You’re not a giant Tintin fan? Well lucky for you changes can be made to the theme to make it more “you”.</p>
+<p>You will notice in the directory set up for you by blogdown there is a file called <code>config.toml</code>. Open this up real quick and locate the where it says <code>[params.logo]</code> (line 35 if a fresh blogdown install).</p>
+<p>Under this you will see the parameter <code>url</code>. You can set this to be whatever your heart desires. Say you’re more of a parrot person, no problem.</p>
+<p><label for="tufte-mn-" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><strong>/config.toml</strong></span></p>
+<pre><code>[params]
+...
+  [params.logo]
+    url = &quot;http://bit.ly/2tNSEG4&quot;
+    width = 50
+    height = 50
+    alt = &quot;Logo&quot;</code></pre>
+<div class="row">
+<div class="fullwidth">
+<div class="thumbnail">
+<a href="/images/parrotlogo.png"> <img class = "img-responsive" src="http://livefreeordichotomize.com/images/parrotlogo.png" alt="New Logo" style="width:100%"> </img></a>
+<div class="caption">
+<p>
+That’s a pretty cool new logo.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="banner" class="section level2">
+<h2>Banner</h2>
+<p>Again, go into your <code>config.toml</code>, but this time you need to add a new key called <code>[params.banner]</code> and under that add a field <code>url</code> just like for the logo.</p>
+<p><label for="tufte-mn-" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><strong>/config.toml</strong></span></p>
+<pre><code>[params.logo]
+  url = &quot;http://bit.ly/2tNSEG4&quot;
+  width = 50
+  height = 50
+  alt = &quot;Logo&quot;
+  
+[params.banner]
+  url = &quot;http://bit.ly/2sV7B6p&quot;</code></pre>
+<p><label for="tufte-mn-" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><strong>Banner Size:</strong> The banner image defaults to being a 3:1 ratio of width to height, so if your image is that size it will be fully shown. Otherwise some will get cut off.</span></p>
+<div class="row">
+<div class="col-md-6">
+<div class="thumbnail">
+<a href="/images/newpannel.png"> <img class = "img-responsive" src="http://livefreeordichotomize.com/images/newpannel.png" alt="New Banner" style="width:100%"> </img></a>
+<div class="caption">
+<p>
+A network diagram?! I like your style.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="adding-authors" class="section level2">
+<h2>Adding authors</h2>
+<p>If you want to have your very own custom bio at the bottom of your articles, go into your blog’s <code>data/</code> directory and add a file titled <code>authors.toml</code>. Inside this file you can fill in some information about the authors on your blog. This info will then show up automatically at the end of any article they write.</p>
+<p>In this include the following info (replacing in the obvious places).</p>
+<p><label for="tufte-mn-" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><strong>/data/authors.toml</strong></span></p>
+<p><label for="tufte-mn-" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">If you don’t have all of the fields no worries, just don’t enter them and they will automatically be hidden from the bio. </span></p>
+<pre><code>[&quot;Party Parrot&quot;]
+  name =  &quot;Mr. Parrot&quot;
+  bio = &quot;This is my super awesome bio and stuff.&quot;
+  website =  &quot;http:/www.example.com&quot;
+  thumbnail = &quot;http://bit.ly/2sV7B6p&quot;
+  twitter = &quot;https://twitter.com/&quot;
+  github = &quot;https://github.com/nstrayer/tuftesque/&quot;</code></pre>
+<p>Make sure that the key <code>[&quot;Author Name&quot;]</code> is exactly as the name appears in the <code>author</code> field of your post’s header.</p>
+<div class="row">
+<div class="col-md-6">
+<div class="thumbnail">
+<a href="/images/partyparrotbio.png"> <img class = "img-responsive" src="http://livefreeordichotomize.com/images/partyparrotbio.png" alt="with a bio" style="width:100%"> </img></a>
+<div class="caption">
+<p>
+Author bios automatically show up if the author’s info is in <code>/data/authors.toml</code>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="beyond-the-basics" class="section level2">
+<h2>Beyond the basics</h2>
+<p>If the limited options included in the theme are not flexible enough for you and you feel comfortable with html and css you can easily extend any part of this theme. For instance, you may notice on our blog we have an interactive animation that plays instead of a banner image. This is accomplished by simply adding a file called <code>banner.html</code> (<a href="https://github.com/LFOD/real-blog/blob/master/layouts/partials/banner.html">this is what it looks like</a>) into the <code>/layouts/partials/</code> directory of our blog. This works because the tuftesque theme has a file in its own directory structure with the same name (<code>/themes/tuftesque/layouts/partials/banner.html</code>). Hugo uses that file to draw the header section of the page, but not before checking in our blog’s own <code>layouts/</code> directory for the file first. Since we have our own version of this file, that one gets used instead of the default banner image.</p>
+<p>So if you want to extend tuftesque (or any other Hugo theme) you never have to muck around in the <code>themes/</code> directory, you simply need to investigate what part of the theme is responsible for the view you want to change by looking at its structure (poke around the <a href="www.github.com/nstrayer/tuftesque">github page</a> to see how tuftesque is laid out) and then replicating that file’s path in your blogs personal <code>layouts/</code> directory and make changes to your hearts desire! This is how tuftesque was slowly built out.</p>
+</div>
+</div>
+<div id="wrap-up" class="section level1">
+<h1>Wrap-Up</h1>
+<p>That’s pretty much it. If any of the above was confusing to you or you have a suggestion for how the theme could be improved please don’t hesitate to submit an issue on <a href="www.github.com/nstrayer/tuftesque">the github</a> or ping me on <a href="www.twitter.com/nicholasstrayer">twitter</a>.</p>
+</div>
+</section>
+<section>
+<hr/>
+  
+
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    <div class="author_blurb">
+        <div class="author_photo">
+          <div class="photo">
+            <img style = "border-radius: 25px;" src="/img/me.jpg" alt="Paul Campbell image" width="90" height="90">
+          </div>
+        </div>
+        <div class = "author_info">
+          <div class = "contact_info">
+              <span class = "name"> 
+                Paul Campbell 
+              </span>
+              
+               
+              
+          </div>
+          <div>
+            <span class = "social_links">
+                 
+                  <a class = "social_buttons" href = https://www.cultureofinsight.com >
+                      <i class="fa fa-globe fa-lg"></i>
+                  </a>
+                
+                
+                  <a class="social_buttons" href = https://twitter.com/paulcampbell91>
+                    <i class="fa fa-twitter fa-lg"></i>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = https://github.com/paulc91/ >
+                    <i class="fa fa-github fa-lg"></i>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = https://www.linkedin.com/in/paul-campbell-792425123/ >
+                    <i class="fa fa-linkedin fa-lg"></i>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = mailto:pacampbell91@gmail.com >
+                    <i class="fa fa-envelope fa-lg"></i>
+                  </a>
+                
+              </span> 
+          </div>
+          <div class = "bio">
+            <p class = "bio_text">R | Data Science | Visualisation</p>
+          </div>
+        </div>
+      </div>
+    
+  
+  
+
+
+
+  
+
+
+      
+  <footer class="page-footer">
+		<hr>
+		<ul class="page-footer-menu">
+		
+		</ul>
+
+  
+
+	<div class="copyright">
+	<p>
+    
+      &copy;2018 Paul Campbell. All rights reserved.
+    
+    
+  </p>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    </script>
+    <script type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</footer>
+
+</section>
+</article>
+</div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+---
+title: D3 Sankey Diagrams from tidy data frames in R
+author: Paul Campbell
+date: '2018-03-01'
+slug: sankey
+categories:
+  - R
+  - Visualisation
+tags:
+  - D3
+  - purrr
+  - tidygraph
+  - htmlwidgets
+draft: true
+---
+
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/d3/d3.min.js"></script>
+<script src="/rmarkdown-libs/sankey/sankey.js"></script>
+<script src="/rmarkdown-libs/sankeyNetwork-binding/sankeyNetwork.js"></script>
+
+
+<p>Get the data in the format we want</p>
+<pre class="r"><code>library(tidyverse)
+library(tidygraph)
+library(igraph)
+library(networkD3)
+
+# https://www.kaggle.com/unitednations/refugee-data/data
+asylum_seekers_raw &lt;- read_csv(&quot;../../data/asylum_seekers.csv&quot;) %&gt;% 
+  rename(Destination = `Country / territory of asylum/residence`)
+
+# get the top 10 countries of origin by &#39;Total decisions&#39;
+top_orig &lt;- asylum_seekers_raw %&gt;%
+  filter(Year == 2016) %&gt;%  
+  group_by(Origin) %&gt;% 
+  summarise(total = sum(`Total decisions`, na.rm = TRUE)) %&gt;% 
+  top_n(10, total) %&gt;% 
+  dplyr::pull(1)
+
+# get the top 10 countries of origin by &#39;Total decisions&#39;
+top_dest &lt;- asylum_seekers_raw %&gt;%
+  filter(Year == 2016) %&gt;%  
+  group_by(Destination) %&gt;% 
+  summarise(total = sum(`Total decisions`, na.rm = TRUE)) %&gt;% 
+  top_n(10, total) %&gt;% 
+  dplyr::pull(1)
+
+# list of destination countries we want to look at
+euro_countries &lt;- 
+  c(&quot;Germany&quot;, &quot;Sweden&quot;, &quot;France&quot;, &quot;United Kingdom&quot;, 
+    &quot;Netherlands&quot;, &quot;Switzerland&quot;, &quot;Italy&quot;, &quot;Belgium&quot;)
+
+# filter and clean the data we want to visualise
+asylum_seekers &lt;- asylum_seekers_raw %&gt;% 
+  filter(Origin %in% top_orig, 
+         Destination %in% top_dest) %&gt;%
+  select(1, 3, 2, 8, 10) %&gt;% 
+  filter(Year == 2016) %&gt;% 
+  select(-Year) %&gt;% 
+  drop_na() %&gt;% 
+  gather(Decision, Weight, 3:4)
+
+head(asylum_seekers)</code></pre>
+<pre><code>## # A tibble: 6 x 4
+##   Origin      Destination    Decision             Weight
+##   &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;                 &lt;int&gt;
+## 1 Afghanistan Germany        decisions_recognized    268
+## 2 Afghanistan Germany        decisions_recognized    166
+## 3 Afghanistan Germany        decisions_recognized  13647
+## 4 Afghanistan France         decisions_recognized    741
+## 5 Afghanistan France         decisions_recognized     48
+## 6 Afghanistan United Kingdom decisions_recognized    512</code></pre>
+<pre class="r"><code>################################# SANKEY FUNCTION ######################################
+sankey_from_data_frame &lt;- function(data, val_col, ...) {
+  
+  weight &lt;- enquo(val_col)
+  
+  df &lt;- 1:(ncol(data)-2) %&gt;% 
+    # collapse dataframe into 3 columns: from, to, weight
+    map_df(~ select(data, 
+                    from = !! quo(names(data)[.x]), 
+                    to = !! quo(names(data)[.x + 1]), 
+                    !! weight)) %&gt;% 
+    drop_na() %&gt;% 
+    group_by(from, to) %&gt;% 
+    summarise(weight = sum(!! weight)) %&gt;% 
+    mutate(colour = to) # used to colour edges in the sankeyNetwork function
+  
+  # create igraph from data frame then convert to tidygraph
+  ig &lt;- #igraph::graph_from_data_frame(df) %&gt;% 
+    tidygraph::as_tbl_graph(df)
+  
+  # extract node data and reduce ids by 1 (required for D3 plotting)
+  nodes &lt;- as_tibble(ig) %&gt;% 
+    rowid_to_column(&quot;id&quot;) %&gt;% 
+    mutate(id = id -1) %&gt;% 
+    as.data.frame
+  
+  # do the same for the edges
+  edges &lt;- ig %&gt;% 
+    activate(edges) %&gt;% 
+    as_tibble() %&gt;% 
+    mutate(from = from - 1, to = to - 1) %&gt;% 
+    as.data.frame
+  
+  # plot work networkD3::sankeyNetwork
+  sankeyNetwork(Links = edges, Nodes = nodes, Source = &quot;from&quot;, Target = &quot;to&quot;, 
+                NodeID = &quot;name&quot;, Value = &quot;weight&quot;, #LinkGroup = &quot;colour&quot;, 
+                fontSize = 14, fontFamily = &quot;Oswald&quot;, width = &quot;90%&quot;)
+}
+################################ END OF FUNCTION ##################################</code></pre>
+<p>Run the function on our data:</p>
+<pre class="r"><code>sankey_from_data_frame(data = asylum_seekers, val_col = Weight)</code></pre>
+<div id="asylum-seeker-flows-in-2016-from-top-10-origin-countries-to-top-10-destination-countries" class="section level3">
+<h3>Asylum Seeker flows in 2016 from top 10 origin countries to top 10 destination countries</h3>
+<div id="htmlwidget-1" style="width:90%;height:480px;" class="sankeyNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"links":{"source":[0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,4,4,5,5,6,6,7,7,8,8,8,8,8,8,8,8,8,9,9,10,10,10,10,10,10,10,10,11,11,11,11,11,11,11,11,12,12,12,12,12,13,13,14,14,15,15,15,15,15,15,15,15,15,15,16,16,17,17,18,18,19,19,19,19,19,19,19,19,19],"target":[4,5,6,7,9,14,16,17,18,4,5,7,9,14,17,18,4,5,6,7,9,13,14,17,18,4,5,6,9,13,14,17,18,20,21,20,21,20,21,20,21,4,5,6,7,9,14,16,17,18,20,21,4,5,6,7,9,14,17,18,4,5,6,7,9,14,17,18,4,5,7,9,14,20,21,20,21,4,5,6,7,9,13,14,16,17,18,20,21,20,21,20,21,4,5,6,7,9,14,16,17,18],"value":[1639,39600,345,1512,504,7141,43,2392,37,4704,35049,5,159,921,1499,144,6585,112,64,21,50,7005,31,259,13,2013,16848,73,293,259,3265,2873,253,13775,32241,249286,122864,2522,8552,83,3537,1493,51487,146,496,271,4108,12651,3172,534,3035,22555,2783,2051,257,69,14311,498,1715,110,2790,9498,3149,540,7793,461,3724,130,5148,32938,36,250,344,1220,6068,8199,11518,2329,173329,1680,916,1117,24,2640,9,2036,609,12660,43,6869,10801,1850,557,16532,11238,5360,25,842,308,0,0,577]},"nodes":{"name":["Afghanistan","Albania","Dem. Rep. of the Congo","Eritrea","France","Germany","Greece","Hungary","Iraq","Italy","Nigeria","Pakistan","Serbia and Kosovo (S/RES/1244 (1999))","South Africa","Sweden","Syrian Arab Rep.","Turkey","United Kingdom","United States of America","Various/Unknown","decisions_recognized","Rejected"],"group":["Afghanistan","Albania","Dem. Rep. of the Congo","Eritrea","France","Germany","Greece","Hungary","Iraq","Italy","Nigeria","Pakistan","Serbia and Kosovo (S/RES/1244 (1999))","South Africa","Sweden","Syrian Arab Rep.","Turkey","United Kingdom","United States of America","Various/Unknown","decisions_recognized","Rejected"]},"options":{"NodeID":"name","NodeGroup":"name","LinkGroup":null,"colourScale":"d3.scaleOrdinal(d3.schemeCategory20);","fontSize":14,"fontFamily":"Oswald","nodeWidth":15,"nodePadding":10,"units":"","margin":{"top":null,"right":null,"bottom":null,"left":null},"iterations":32,"sinksRight":true}},"evals":[],"jsHooks":[]}</script>
+</div>

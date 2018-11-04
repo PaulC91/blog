@@ -1,0 +1,193 @@
+---
+title: Introducing shinyauthr
+author: Paul Campbell
+date: '2018-11-04'
+slug: introducing-shinyauthr
+categories:
+  - R
+  - Shiny
+tags:
+  - packages
+---
+
+I've been using R & shiny for a couple of years now. By default, that means I've been taking advantage of the countless open-source packages provided by the generous community of R developers. The ever-growing number of packages is making it possible to do just about anything you'd want to with R which is making someone like myself's job easier and easier every day - so thanks to all the package developers for their efforts!
+
+With that in mind, I thought it was about time I built one of my own in an attempt to provide something useful and easy to use for R/Shiny developers. `shinyauthr` is the result of that. It is a package providing module functions that can be used to add an authentication layer to your shiny apps.
+
+It borrows some code from treysp's [shiny_password](https://github.com/treysp/shiny_password) template with the goal of making implementation simpler for end users and allowing the login/logout UIs to fit easily into any UI framework, including [shinydashboard](https://rstudio.github.io/shinydashboard/) (see example below).
+
+---
+
+## Installation
+
+Install the package from github with `devtools`.
+
+```r
+devtools::install_github("paulc91/shinyauthr")
+```
+---
+
+## Example
+
+Below is a live example of shinyauthr in action within a shinydashboard UI.
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.min.js"></script>
+<style>
+  iframe {
+    min-width: 100%;
+  }
+</style>
+<iframe id="myIframe" src="https://cultureofinsight.shinyapps.io/shinyauthr/" scrolling="no" frameborder="no"></iframe>
+<script>
+  iFrameResize({
+    heightCalculationMethod: 'taggedElement'
+  });
+</script>
+
+---
+
+## Usage
+
+The package provides 2 module functions each with a UI and server element:
+
+- `login`
+- `loginUI`
+- `logout`
+- `logoutUI`
+
+Below is a minimal reproducible example of how to use the authentication modules in a shiny app. Note that you must initiate the use of the shinyjs package with `shinyjs::useShinyjs()` in your UI code for this to work appropriately.
+
+```r
+library(shiny)
+library(shinyauthr)
+library(shinyjs)
+
+# dataframe that holds usernames, passwords and other user data
+user_base <- data.frame(
+  user = c("user1", "user2"),
+  password = c("pass1", "pass2"), 
+  permissions = c("admin", "standard"),
+  name = c("User One", "User Two"),
+  stringsAsFactors = FALSE
+)
+
+ui <- fluidPage(
+  # must turn shinyjs on
+  shinyjs::useShinyjs(),
+  # add logout button UI 
+  div(class = "pull-right", shinyauthr::logoutUI(id = "logout")),
+  # add login panel UI function
+  shinyauthr::loginUI(id = "login"),
+  # setup table output to show user info after login
+  tableOutput("user_table")
+)
+
+server <- function(input, output, session) {
+  
+  # call the logout module with reactive trigger to hide/show
+  logout_init <- callModule(shinyauthr::logout, 
+                            id = "logout", 
+                            active = reactive(credentials()$user_auth))
+  
+  # call login module supplying data frame, user and password cols
+  # and reactive trigger
+  credentials <- callModule(shinyauthr::login, 
+                            id = "login", 
+                            data = user_base,
+                            user_col = user,
+                            pwd_col = password,
+                            log_out = reactive(logout_init()))
+  
+  # pulls out the user information returned from login module
+  user_data <- reactive({credentials()$info})
+  
+  output$user_table <- renderTable({
+    # use req to only render results when credentials()$user_auth is TRUE
+    req(credentials()$user_auth)
+    user_data()
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+---
+
+## Details
+
+When the login module is called, it returns a reactive list containing 2 elements:
+
+- `user_auth`
+- `info`
+
+The initial values of these variables are `FALSE` and `NULL` respectively. However,
+given a data frame or tibble containing user names, passwords and other user data (optional), the login module will assign a `user_auth` value of `TRUE` if the user supplies a matching user name and password. The value of `info` then becomes the row of data associated with that user which can be used in the main to control content based on user permission variables etc.
+
+The logout button will only show when `user_auth` is `TRUE`. Clicking the button will reset `user_auth` back to `FALSE` which will hide the button and show the login panel again.
+
+You can set the code in your server functions to only run after a successful login through use of the `req()` function inside all reactives, renders and observers. In the example above, using `req(credentials()$user_auth)` inside the `renderTable` function ensures the table showing the returned user information is only rendered when `user_auth` is `TRUE`.
+
+---
+
+## Hashing Passwords with digest
+
+`r tufte::margin_note("Note: your plain text passwords must be a character vector, not factors, prior to hashing for this to work as shiny inputs are passed as character strings.")`
+
+If you are hosting your user passwords on the internet, it is a good idea to first encrypt them with a hashing algorithm. You can use the [digest package](https://github.com/eddelbuettel/digests) to do this. You can then tell the `shinyauthr::login` module that your passwords are hashed and what algorithm you used when hashing with digest. 
+
+For example, a sample user base like the following can be incorporated for use with `shinyauthr`:
+
+```r
+# create a user base then hash passwords with md5 algorithm
+# then save to an rds file in app directory
+library(digest)
+
+user_base <- data.frame(
+  user = c("user1", "user2"),
+  password = sapply(c("pass1", "pass2"), digest, "md5"), 
+  permissions = c("admin", "standard"),
+  name = c("User One", "User Two"),
+  stringsAsFactors = FALSE
+)
+
+saveRDS(user_base, "user_base.rds")
+```
+```r
+# in your app code, read in the user base rds file
+user_base <- readRDS("user_base.rds")
+```
+```r
+# then when calling the module, set hashed = TRUE and algo = "md5"
+credentials <- callModule(shinyauthr::login, "login", 
+                          data = user_base,
+                          user_col = user,
+                          pwd_col = password,
+                          hashed = TRUE,
+                          algo = "md5",
+                          log_out = reactive(logout_init()))
+```
+
+---
+
+## Use Cases
+
+This isn't an attempt at a substitute for any of RStudio's excellent commercial shiny hosting platforms that provide built-in authentication. If you are a company or organisation looking for a secure on-premise solution, definitely opt for one of those.
+
+`r tufte::margin_note("A Professional shinyapps.io plan could be used in this use-case but I've found managing a significant number of users with this to be a little cumbersome and there is currently no https support for custom domains.")`
+
+However, there are some cases where these options may not be appropriate or feasible. One-off applications for an external client for example, may require authentication and user permissions that control in-app content. Having the option of deploying the app on VM with Shiny Server Open Source and controlling authentication and user permissions with `shinyauthr` could be a viable, cost-effective solution.
+
+---
+
+## Disclaimer
+
+I'm not a security professional so cannot guarantee this authentication procedure to be foolproof. It is ultimately the shiny app developer's responsibility not to expose any sensitive content to the client without the necessary login criteria being met.
+
+I would welcome any feedback on any potential vulnerabilities in the process. I know that apps hosted on a server without an SSL certificate could be open to interception of usernames and passwords submitted by a user. As such I would not recommend the use of shinyauthr without an HTTPS connection.
+
+---
+
+## fin
+
+That's all for now. Issues and pull requests welcome over on the [github repo](https://github.com/paulc91/shinyauthr).
+
+_a dopo!_
