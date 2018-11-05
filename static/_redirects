@@ -1,0 +1,3 @@
+http://paul.rbind.io/*              https://paul.rbind.io/:splat  301!
+https://paulcampbell.netlify.com/*  https://paul.rbind.io/:splat  301!
+http://paulcampbell.netlify.com/*   https://paul.rbind.io/:splat  301!
