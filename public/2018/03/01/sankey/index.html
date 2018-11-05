@@ -50,6 +50,22 @@ body {
 
 
 
+<title>D3 Sankey Diagrams from tidy data frames in R</title>
+<meta property="og:title" content="D3 Sankey Diagrams from tidy data frames in R">
+<meta property="og:type" content="article">
+<meta property="og:description" content="Get the data in the format we want
+library(tidyverse) library(tidygraph) library(igraph) library(networkD3) # https://www.kaggle.com/unitednations/refugee-data/data asylum_seekers_raw &lt;- read_csv(&quot;../../data/asylum_seekers.csv&quot;) %&gt;% rename(Destination = `Country / territory of asylum/residence`) # get the top 10 countries of origin by &#39;Total decisions&#39; top_orig &lt;- asylum_seekers_raw %&gt;% filter(Year == 2016) %&gt;% group_by(Origin) %&gt;% summarise(total = sum(`Total decisions`, na.rm = TRUE)) %&gt;% top_n(10, total) %&gt;% dplyr::pull(1) # get the top 10 countries of origin by &#39;Total decisions&#39; top_dest &lt;- asylum_seekers_raw %&gt;% filter(Year == 2016) %&gt;% group_by(Destination) %&gt;% summarise(total = sum(`Total decisions`, na.">
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:image" content="/img/paul_square.png" >
+  <meta property='og:image' content="/img/paul_square.png" >
+  
+  
+
+
+
+
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128595985-1"></script>
 <script>

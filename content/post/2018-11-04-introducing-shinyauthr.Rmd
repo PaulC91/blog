@@ -3,6 +3,7 @@ title: Introducing shinyauthr
 author: Paul Campbell
 date: '2018-11-04'
 slug: introducing-shinyauthr
+excerpt: "R package for in-app shiny authentication"
 categories:
   - R
   - Shiny
