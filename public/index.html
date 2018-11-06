@@ -42,7 +42,7 @@
 <style>
 body {
   
-    background-color:  #f5f5f5;
+    background-color:  #fff;
   
 }
 </style>
@@ -70,7 +70,6 @@ body {
 
   gtag('config', 'UA-128595985-1');
 </script>
-
 
 </head>
 
@@ -379,6 +378,16 @@ body {
     
   </p>
 </div>
+<script>
+  (function() {
+    var links = document.getElementsByTagName('a');
+    for (var i = 0; i < links.length; i++) {
+      if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+        links[i].target = '_blank';
+      }
+    }
+  })();
+</script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
       tex2jax: {

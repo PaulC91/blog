@@ -38,8 +38,8 @@ tags$head( tags$script(src=&amp;quot;https://cdnjs.cloudflare.com/ajax/libs/ifra
       <pubDate>Mon, 12 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>/about/</guid>
-      <description>Hello! I&amp;rsquo;m Paul and this is a personal blog to document my forays into all things R, data &amp;amp; visualisation.
-Originally from Edinburgh, Scotland, I graduated with an MA in Applied Economics from the University of St Andrews in 2013.
+      <description>Hello! I&amp;rsquo;m Paul and this is a personal blog to document my forays into all things R, data science &amp;amp; visualisation.
+Originally from Edinburgh, Scotland, I graduated with an MA (hons) in Applied Economics from the University of St Andrews in 2013.
 I&amp;rsquo;m now working for data consultancy Culture of Insight in London as an analyst, R programmer and shiny developer.
 Feel free to get in touch via any of the channels below.</description>
     </item>

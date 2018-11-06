@@ -1,4 +1,4 @@
-baseurl = "https://paulcampbell.netlify.com/"
+baseurl = "https://paul.rbind.io/"
 languageCode = "en-us"
 title = "Paul Campbell"
 theme = "tuftesque"
@@ -38,7 +38,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     
     description = "R | Data | Visualisation"
     
-    backgroundcolor = "#f5f5f5"
+    backgroundcolor = "#fff"
 
     # options for highlight.js (version, additional languages, and theme)
     highlightjsVersion = "9.11.0"
