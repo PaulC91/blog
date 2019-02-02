@@ -407,7 +407,7 @@ figure.fullwidth figcaption {
 
 /* Sidenotes, margin notes, figures, captions */
 img { 
-  max-width: 100%; 
+  max-width: 100%;
 }
 
 .sidenote, .marginnote { 
@@ -493,6 +493,12 @@ pre.code {
   max-width: 90%;
   clear: both; 
 }
+
+p img{
+  max-width: 150%;
+  width: 127%;
+}
+
 
 span.newthought { 
   font-variant: small-caps;

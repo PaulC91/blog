@@ -6,10 +6,20 @@
     <description>Recent content in R on Paul Campbell</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Nov 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 01 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Tidying Multi-Header Excel Data with R</title>
+      <link>/2019/02/01/tidying-multi-header-excel-data-with-r/</link>
+      <pubDate>Fri, 01 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/2019/02/01/tidying-multi-header-excel-data-with-r/</guid>
+      <description>Problem If, like me, you’re lucky enough to work with a lot of data that arrives in the form of excel tables, you will most likely be familiar with data in the format below.
+This format makes it easier for a human eye to read the data, but seriously hinders a computers ability to analyse it. So, if you prefer anaylsing and visualising your data with a programming language rather than staring at it in Excel we’re going to need to knock it into a tidier form before we can let the powers of R loose on it.</description>
+    </item>
     
     <item>
       <title>Introducing shinyauthr</title>

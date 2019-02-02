@@ -1,0 +1,476 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+<head>
+<title>Tidying Multi-Header Excel Data with R</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Paul Campbell">
+<meta name="generator" content="Hugo 0.31" />
+
+  
+<link rel="stylesheet" href="/css/androidstudio.css" id="theme-stylesheet">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Spectral:300,400,500,700">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="/css/tuftesque.css">
+<style>
+body {
+  
+    background-color:  #fff;
+  
+}
+</style>
+
+
+
+<title>Tidying Multi-Header Excel Data with R</title>
+<meta property="og:title" content="Tidying Multi-Header Excel Data with R">
+<meta property="og:type" content="article">
+<meta property="og:description" content="Problem If, like me, you’re lucky enough to work with a lot of data that arrives in the form of excel tables, you will most likely be familiar with data in the format below.
+This format makes it easier for a human eye to read the data, but seriously hinders a computers ability to analyse it. So, if you prefer anaylsing and visualising your data with a programming language rather than staring at it in Excel we’re going to need to knock it into a tidier form before we can let the powers of R loose on it.">
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:image" content="/img/paul_square.png" >
+  <meta property='og:image' content="/img/paul_square.png" >
+  
+  
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-128595985-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-128595985-1');
+</script>
+
+</head>
+
+<body>
+<header>
+	<div class="u-header">
+		<nav class="bar">
+	    <ul>
+	      
+          <li><a href="/">Blog</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/projects/">Projects</a></li>
+        
+          <li><a href="/docs/paul_campbell_cv_2018.pdf">CV</a></li>
+        
+          <li><a href="/categories/"><i class='fa fa-list-alt fa-lg' title='categories'></i></a></li>
+        
+        <li><a href="/tags"><i class="fa fa-tags fa-lg" title="tags"></i></a></li>
+	      <li><a href="/index.xml"><i class="fa fa-rss fa-lg" title="RSS"></i></a></li>
+	    </ul>
+    </nav>
+  </div>
+</header>
+<hr/>
+<div id="layout" class="pure-g">
+<article class="pure-u-1">
+<section>
+  <h1 class="content-title">
+  
+  <a href="/2019/02/01/tidying-multi-header-excel-data-with-r/">Tidying Multi-Header Excel Data with R</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Paul Campbell</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Feb 1, 2019
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;7 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="/categories/r">R</a>
+    
+    
+    </span>
+    
+    
+    </section>
+
+
+<section><div id="problem" class="section level2">
+<h2>Problem</h2>
+<p>If, like me, you’re lucky enough to work with a lot of data that arrives in the form of excel tables, you will most likely be familiar with data in the format below.</p>
+<p><img src="/img/multi_header.png"/></p>
+<p>This format makes it easier for a human eye to read the data, but seriously hinders a computers ability to analyse it. So, if you prefer anaylsing and visualising your data with a programming language rather than staring at it in Excel we’re going to need to knock it into a <em>tidier</em> form before we can let the powers of R loose on it.</p>
+<p>That means one column for each variable and one row for each observation of said variables. For this sample data set I would define that as columns for:</p>
+<ul>
+<li><code>ID</code></li>
+<li><code>DATE</code></li>
+<li><code>WEEKDAY</code></li>
+<li><code>TIME</code></li>
+<li><code>GROUP</code></li>
+<li><code>METRIC1</code></li>
+<li><code>METRIC2</code></li>
+<li><code>METRIC3</code></li>
+</ul>
+<p>Currently we have the metrics for each group spread out over 3 chunks with the group indicated by a top header (only in the first column of that group) and the metric headers below. Adding fuel to the fire, in the first chunk of columns you’ll notice the <code>ID</code> and <code>WEEKDAY</code> columns are floating up in row one with the others down in row 2 - nice.</p>
+<p>A data frame in R can only take one set of column names that must be unique from each other so we need a method of reducing these headers into a single row of unique names by merging the group and metric information together with a separator. So group 1’s metric columns will be named <code>GROUP1_METRIC1</code> <code>GROUP1_METRIC2</code> <code>GROUP1_METRIC3</code> and so forth for each group.</p>
+<hr />
+</div>
+<div id="solution" class="section level2">
+<h2>Solution</h2>
+<p>So let’s give it a go. These are the packages required:</p>
+<pre class="r"><code>library(tidyverse) 
+library(readxl)
+library(hms) # to convert datetimes to hms class
+library(zoo) # for the super useful na.locf0 function</code></pre>
+<p>If we read all of the data with <code>read_excel</code> what do we get?</p>
+<pre class="r"><code>path &lt;- &quot;../../static/my_data.xlsx&quot;
+raw_data &lt;- read_excel(path)
+raw_data</code></pre>
+<pre><code>## # A tibble: 11 x 13
+##       ID X__1  WEEKDAY  X__2  GROUP1 X__3  X__4  GROUP2 X__5  X__6  GROUP3
+##    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; 
+##  1 NA    DATE  &lt;NA&gt;     TIME  METRI… METR… METR… METRI… METR… METR… METRI…
+##  2  1.00 43466 Tuesday  0.5   0.562… 4.34… 0.23… 0.665… 0.61… 0.95… 0.206…
+##  3  2.00 43467 Wednesd… 0.54… 0.799… 0.76… 0.66… 0.566… 0.85… 0.28… 0.442…
+##  4  3.00 43468 Thursday 0.58… 0.514… 0.44… 0.20… 0.476… 0.45… 0.25… 0.673…
+##  5  4.00 43469 Friday   0.625 0.598… 0.59… 0.17… 0.635… 0.86… 2.25… 0.263…
+##  6  5.00 43470 Saturday 0.66… 0.835… 0.19… 0.90… 0.702… 0.57… 0.64… 0.483…
+##  7  6.00 43471 Sunday   0.70… 0.470… 0.33… 0.84… 0.590… 0.42… 0.98… 0.660…
+##  8  7.00 43472 Monday   0.75  0.555… 0.52… 0.51… 0.970… 0.32… 0.11… 0.452…
+##  9  8.00 43473 Tuesday  0.79… 0.109… 0.47… 0.63… 8.567… 0.46… 3.29… 0.499…
+## 10  9.00 43474 Wednesd… 0.83… 0.953… 0.71… 0.90… 0.393… 0.71… 0.68… 8.039…
+## 11 10.0  43475 Thursday 0.875 0.473… 0.28… 0.38… 0.440… 0.11… 0.51… 0.702…
+## # ... with 2 more variables: X__7 &lt;chr&gt;, X__8 &lt;chr&gt;</code></pre>
+<p>a mess.</p>
+<p>The first row has been set as the column names with blank names assinged as <code>X__*</code> by <code>readxl</code>. Also every column has a character class because the second row headers have been considered as data.</p>
+<hr />
+</div>
+<div id="building-our-own-column-names-with-code" class="section level2">
+<h2>Building our own column names with code</h2>
+<p>So before attempting to actually read in the data lets try to form the single set of column names we need. To do this, I’m going to first get the headers in row 1 as a character vector and replace the missing column name pattern <code>X__*</code> with an <code>NA</code>.</p>
+<p>Like so:</p>
+<pre class="r"><code>head1 &lt;- read_excel(path, col_names = TRUE) %&gt;% 
+  names() %&gt;% 
+  str_replace(&quot;X__\\d*&quot;, NA_character_)
+
+head1</code></pre>
+<pre><code>##  [1] &quot;ID&quot;      NA        &quot;WEEKDAY&quot; NA        &quot;GROUP1&quot;  NA        NA       
+##  [8] &quot;GROUP2&quot;  NA        NA        &quot;GROUP3&quot;  NA        NA</code></pre>
+<p>To do the same for the headers in row 2 we do the same thing but add a <code>skip = 1</code> argument to <code>read_excel</code> which tells it to ignore the first row entirely.</p>
+<pre class="r"><code>head2 &lt;- read_excel(path, skip = 1, col_names = TRUE) %&gt;% 
+  names() %&gt;% 
+  str_replace(&quot;X__\\d*&quot;, NA_character_)
+head2</code></pre>
+<pre><code>##  [1] NA           &quot;DATE&quot;       NA           &quot;TIME&quot;       &quot;METRIC1&quot;   
+##  [6] &quot;METRIC2&quot;    &quot;METRIC3&quot;    &quot;METRIC1__1&quot; &quot;METRIC2__1&quot; &quot;METRIC3__1&quot;
+## [11] &quot;METRIC1__2&quot; &quot;METRIC2__2&quot; &quot;METRIC3__2&quot;</code></pre>
+<p>Because we had non-unique column names in this case <code>read_excel</code> has assinged some <code>__*</code> patterns to the metric names which we also want to get rid of.</p>
+<pre class="r"><code>head2 &lt;- head2 %&gt;% str_remove(&quot;__\\d*&quot;)
+head2</code></pre>
+<pre><code>##  [1] NA        &quot;DATE&quot;    NA        &quot;TIME&quot;    &quot;METRIC1&quot; &quot;METRIC2&quot; &quot;METRIC3&quot;
+##  [8] &quot;METRIC1&quot; &quot;METRIC2&quot; &quot;METRIC3&quot; &quot;METRIC1&quot; &quot;METRIC2&quot; &quot;METRIC3&quot;</code></pre>
+<p>To deal with the rogue <code>ID</code> and <code>WEEKDAY</code> columns that were in row 1 with nothing below in row 2, we want to move them from <code>head1</code> into <code>head2</code> then replace with <code>NA</code> in <code>head1</code></p>
+<pre class="r"><code>ncols &lt;- length(head1)
+
+for (n in 1:ncols) {
+  if (is.na(head2[n])) {
+    head2[n] &lt;- head1[n]
+    head1[n] &lt;- NA_character_
+  }
+}
+
+head1</code></pre>
+<pre><code>##  [1] NA       NA       NA       NA       &quot;GROUP1&quot; NA       NA      
+##  [8] &quot;GROUP2&quot; NA       NA       &quot;GROUP3&quot; NA       NA</code></pre>
+<pre class="r"><code>head2</code></pre>
+<pre><code>##  [1] &quot;ID&quot;      &quot;DATE&quot;    &quot;WEEKDAY&quot; &quot;TIME&quot;    &quot;METRIC1&quot; &quot;METRIC2&quot; &quot;METRIC3&quot;
+##  [8] &quot;METRIC1&quot; &quot;METRIC2&quot; &quot;METRIC3&quot; &quot;METRIC1&quot; &quot;METRIC2&quot; &quot;METRIC3&quot;</code></pre>
+<p>Getting there! Next we need to fill out each group name so that it occurs 3 times to match each metric, rather than just once. To do this we can convert the vector to a 1 column tibble or data frame then use the <code>zoo::na.locf0()</code> that replaces <code>NA</code>s with nearest non-<code>NA</code> above it, then pull it back into a vector.</p>
+<pre class="r"><code>head1 &lt;- tibble(head1) %&gt;% 
+  mutate(head1 = zoo::na.locf0(head1)) %&gt;% 
+  pull()
+
+head1</code></pre>
+<pre><code>##  [1] NA       NA       NA       NA       &quot;GROUP1&quot; &quot;GROUP1&quot; &quot;GROUP1&quot;
+##  [8] &quot;GROUP2&quot; &quot;GROUP2&quot; &quot;GROUP2&quot; &quot;GROUP3&quot; &quot;GROUP3&quot; &quot;GROUP3&quot;</code></pre>
+<p>We’re finally at the stage where we can combine the headers. Using <code>map_chr</code> we can ask R to merge headers with a <code>_</code> separator <em>only</em> if there is a non-<code>NA</code> in <code>head1</code> <em>and</em> <code>head2</code>, otherwise we only need the <code>head2</code> name.</p>
+<pre class="r"><code>headers &lt;- map_chr(1:ncols, ~ {
+  case_when(
+    !is.na(head1[.x]) &amp; !is.na(head2[.x]) ~ paste(head1[.x], head2[.x], sep = &quot;_&quot;),
+    TRUE ~ head2[.x]
+  )
+})
+
+headers</code></pre>
+<pre><code>##  [1] &quot;ID&quot;             &quot;DATE&quot;           &quot;WEEKDAY&quot;        &quot;TIME&quot;          
+##  [5] &quot;GROUP1_METRIC1&quot; &quot;GROUP1_METRIC2&quot; &quot;GROUP1_METRIC3&quot; &quot;GROUP2_METRIC1&quot;
+##  [9] &quot;GROUP2_METRIC2&quot; &quot;GROUP2_METRIC3&quot; &quot;GROUP3_METRIC1&quot; &quot;GROUP3_METRIC2&quot;
+## [13] &quot;GROUP3_METRIC3&quot;</code></pre>
+<p>🙌</p>
+<hr />
+</div>
+<div id="import-the-data-with-new-headers" class="section level2">
+<h2>Import the data with new headers</h2>
+<p>Now we can read in the data, ignore both header rows and supply our own column names to <code>read_excel</code></p>
+<pre class="r"><code>raw_data &lt;- read_excel(path, skip = 2, col_names = headers)
+
+raw_data</code></pre>
+<pre><code>## # A tibble: 10 x 13
+##       ID DATE                WEEKDAY   TIME                GROUP1_METRIC1
+##    &lt;dbl&gt; &lt;dttm&gt;              &lt;chr&gt;     &lt;dttm&gt;                       &lt;dbl&gt;
+##  1  1.00 2019-01-01 00:00:00 Tuesday   1899-12-31 12:00:00          0.562
+##  2  2.00 2019-01-02 00:00:00 Wednesday 1899-12-31 13:00:00          0.799
+##  3  3.00 2019-01-03 00:00:00 Thursday  1899-12-31 14:00:00          0.514
+##  4  4.00 2019-01-04 00:00:00 Friday    1899-12-31 15:00:00          0.599
+##  5  5.00 2019-01-05 00:00:00 Saturday  1899-12-31 16:00:00          0.836
+##  6  6.00 2019-01-06 00:00:00 Sunday    1899-12-31 17:00:00          0.471
+##  7  7.00 2019-01-07 00:00:00 Monday    1899-12-31 18:00:00          0.556
+##  8  8.00 2019-01-08 00:00:00 Tuesday   1899-12-31 19:00:00          0.109
+##  9  9.00 2019-01-09 00:00:00 Wednesday 1899-12-31 20:00:00          0.953
+## 10 10.0  2019-01-10 00:00:00 Thursday  1899-12-31 21:00:00          0.474
+## # ... with 8 more variables: GROUP1_METRIC2 &lt;dbl&gt;, GROUP1_METRIC3 &lt;dbl&gt;,
+## #   GROUP2_METRIC1 &lt;dbl&gt;, GROUP2_METRIC2 &lt;dbl&gt;, GROUP2_METRIC3 &lt;dbl&gt;,
+## #   GROUP3_METRIC1 &lt;dbl&gt;, GROUP3_METRIC2 &lt;dbl&gt;, GROUP3_METRIC3 &lt;dbl&gt;</code></pre>
+<hr />
+</div>
+<div id="tidy-the-data" class="section level2">
+<h2>Tidy the data</h2>
+<p>Now to tidy the data into our desired columns listed above, we use the <code>gather</code>, <code>separate</code>, <code>spread</code> method.</p>
+<pre class="r"><code># get index of first column that contains metric data
+mcol1 &lt;- which(str_detect(headers, &quot;METRIC&quot;)) %&gt;% first()
+
+tidy_data &lt;- raw_data %&gt;% 
+  gather(KEY, VALUE, mcol1:ncols) %&gt;% 
+  separate(KEY, into = c(&quot;GROUP&quot;, &quot;METRIC&quot;), sep = &quot;_&quot;) %&gt;% 
+  spread(METRIC, VALUE) %&gt;% 
+  mutate(DATE = as.Date(DATE), TIME = as.hms(TIME)) # reclass for nicer printing
+
+tidy_data</code></pre>
+<pre><code>## # A tibble: 30 x 8
+##       ID DATE       WEEKDAY   TIME   GROUP  METRIC1 METRIC2 METRIC3
+##    &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt;     &lt;time&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1  1.00 2019-01-01 Tuesday   12:00  GROUP1   0.562  0.0435   0.232
+##  2  1.00 2019-01-01 Tuesday   12:00  GROUP2   0.666  0.611    0.958
+##  3  1.00 2019-01-01 Tuesday   12:00  GROUP3   0.206  0.104    0.201
+##  4  2.00 2019-01-02 Wednesday 13:00  GROUP1   0.799  0.761    0.670
+##  5  2.00 2019-01-02 Wednesday 13:00  GROUP2   0.567  0.857    0.282
+##  6  2.00 2019-01-02 Wednesday 13:00  GROUP3   0.442  0.868    0.696
+##  7  3.00 2019-01-03 Thursday  14:00  GROUP1   0.514  0.444    0.204
+##  8  3.00 2019-01-03 Thursday  14:00  GROUP2   0.477  0.457    0.254
+##  9  3.00 2019-01-03 Thursday  14:00  GROUP3   0.673  0.149    0.408
+## 10  4.00 2019-01-04 Friday    15:00  GROUP1   0.599  0.597    0.172
+## # ... with 20 more rows</code></pre>
+<hr />
+</div>
+<div id="go-berserk-with-your-tidy-data" class="section level2">
+<h2>Go berserk with your tidy data</h2>
+<p>Now we can do cool stuff like this…</p>
+<pre class="r"><code># average of each metric by group
+tidy_data %&gt;% 
+  group_by(GROUP) %&gt;% 
+  summarise_at(vars(contains(&quot;METRIC&quot;)), mean) </code></pre>
+<pre><code>## # A tibble: 3 x 4
+##   GROUP  METRIC1 METRIC2 METRIC3
+##   &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+## 1 GROUP1   0.587   0.438   0.546
+## 2 GROUP2   0.553   0.540   0.450
+## 3 GROUP3   0.446   0.473   0.415</code></pre>
+<p>and this…</p>
+<pre class="r"><code>ggplot(tidy_data, aes(x = METRIC1, y = METRIC2, colour = GROUP)) +
+  geom_point(aes(size = METRIC3))</code></pre>
+<p><img src="/post/2019-02-01-tidying-multi-header-excel-data-with-r_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<hr />
+<p>That’s all for now. Give me a shout if you have any questions or suggested improvements.</p>
+<p><em>hasta luego!</em></p>
+</div>
+</section>
+<section>
+<hr/>
+  
+
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    <div class="author_blurb">
+        <div class="author_photo">
+          <div class="photo">
+            <a href="/">
+              <img style = "border-radius: 25px;" src="/img/paul_square.png" alt="Paul Campbell image" width="90" height="90">
+            </a>
+          </div>
+        </div>
+        <div class = "author_info">
+          <div class = "contact_info">
+              <span class = "name"> 
+                Paul Campbell 
+              </span>
+          </div>
+          <div>
+            <span class = "social_links">
+                
+                  <a class="social_buttons" href = https://twitter.com/paulcampbell91>
+                    <i class="fa fa-twitter fa-lg"></i>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = https://github.com/paulc91/ >
+                    <i class="fa fa-github fa-lg"></i>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = https://www.linkedin.com/in/paulcampbell91/ >
+                    <i class="fa fa-linkedin fa-lg"></i>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = mailto:pacampbell91@gmail.com >
+                    <i class="fa fa-envelope fa-lg"></i>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = https://www.cultureofinsight.com >
+                      <i class="fa fa-globe fa-lg"></i>
+                  </a>
+                
+              </span> 
+          </div>
+          <div class = "bio">
+            
+            <span>R | Data | Visualisation</span>
+              
+          </div>
+        </div>
+      </div>
+    
+  
+  
+
+
+
+  
+
+
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+       
+      var disqus_shortname = "paulsblog-2" 
+      var disqus_identifier = '\/2019\/02\/01\/tidying-multi-header-excel-data-with-r\/';
+       
+      (function() {
+          if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+              document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+              return;
+          }
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+      
+  <footer class="page-footer">
+		<hr>
+		<ul class="page-footer-menu">
+		
+		</ul>
+
+  
+
+	<div class="copyright">
+	<p>
+    
+      &copy;2019 Paul Campbell. All rights reserved.
+    
+    
+  </p>
+</div>
+<script>
+  (function() {
+    var links = document.getElementsByTagName('a');
+    for (var i = 0; i < links.length; i++) {
+      if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+        links[i].target = '_blank';
+      }
+    }
+  })();
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    </script>
+    <script type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</footer>
+
+</section>
+</article>
+</div>
+</body>
+</html>
