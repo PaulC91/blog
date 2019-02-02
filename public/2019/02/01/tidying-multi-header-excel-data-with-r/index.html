@@ -53,8 +53,7 @@ body {
 <title>Tidying Multi-Header Excel Data with R</title>
 <meta property="og:title" content="Tidying Multi-Header Excel Data with R">
 <meta property="og:type" content="article">
-<meta property="og:description" content="Problem If, like me, you’re lucky enough to work with a lot of data that arrives in the form of excel tables, you will most likely be familiar with data in the format below.
-This format makes it easier for a human eye to read the data, but seriously hinders a computers ability to analyse it. So, if you prefer anaylsing and visualising your data with a programming language rather than staring at it in Excel we’re going to need to knock it into a tidier form before we can let the powers of R loose on it.">
+<meta property="og:description" content="Turn inconsistently multi-headered excel data into a tidy data frame in R.">
 
   
   <meta name="twitter:card" content="summary">
@@ -147,9 +146,9 @@ This format makes it easier for a human eye to read the data, but seriously hind
 
 <section><div id="problem" class="section level2">
 <h2>Problem</h2>
-<p>If, like me, you’re lucky enough to work with a lot of data that arrives in the form of excel tables, you will most likely be familiar with data in the format below.</p>
+<p>If you’re lucky enough to work with a lot of data that arrives in the form of excel tables, you will most likely be familiar with data in the format below.</p>
 <p><img src="/img/multi_header.png"/></p>
-<p>This format makes it easier for a human eye to read the data, but seriously hinders a computers ability to analyse it. So, if you prefer anaylsing and visualising your data with a programming language rather than staring at it in Excel we’re going to need to knock it into a <em>tidier</em> form before we can let the powers of R loose on it.</p>
+<p>This format makes it easier for a human eye to read the data, but seriously hinders a computers ability to analyse it. So, if you prefer analysing and visualising your data with a programming language rather than staring at it in Excel we’re going to need to knock it into a <em>tidier</em> form before we can let the powers of R loose on it.</p>
 <p>That means one column for each variable and one row for each observation of said variables. For this sample data set I would define that as columns for:</p>
 <ul>
 <li><code>ID</code></li>
@@ -162,11 +161,11 @@ This format makes it easier for a human eye to read the data, but seriously hind
 <li><code>METRIC3</code></li>
 </ul>
 <p>Currently we have the metrics for each group spread out over 3 chunks with the group indicated by a top header (only in the first column of that group) and the metric headers below. Adding fuel to the fire, in the first chunk of columns you’ll notice the <code>ID</code> and <code>WEEKDAY</code> columns are floating up in row one with the others down in row 2 - nice.</p>
-<p>A data frame in R can only take one set of column names that must be unique from each other so we need a method of reducing these headers into a single row of unique names by merging the group and metric information together with a separator. So group 1’s metric columns will be named <code>GROUP1_METRIC1</code> <code>GROUP1_METRIC2</code> <code>GROUP1_METRIC3</code> and so forth for each group.</p>
 <hr />
 </div>
 <div id="solution" class="section level2">
 <h2>Solution</h2>
+<p>A data frame in R can only take one set of column names that must be unique from each other so we need a method of reducing these headers into a single row of unique names by merging the group and metric information together with a separator. So group 1’s metric columns will be named <code>GROUP1_METRIC1</code> <code>GROUP1_METRIC2</code> <code>GROUP1_METRIC3</code> and so forth for each group.</p>
 <p>So let’s give it a go. These are the packages required:</p>
 <pre class="r"><code>library(tidyverse) 
 library(readxl)
@@ -180,19 +179,19 @@ raw_data</code></pre>
 ##       ID X__1  WEEKDAY  X__2  GROUP1 X__3  X__4  GROUP2 X__5  X__6  GROUP3
 ##    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; 
 ##  1 NA    DATE  &lt;NA&gt;     TIME  METRI… METR… METR… METRI… METR… METR… METRI…
-##  2  1.00 43466 Tuesday  0.5   0.562… 4.34… 0.23… 0.665… 0.61… 0.95… 0.206…
-##  3  2.00 43467 Wednesd… 0.54… 0.799… 0.76… 0.66… 0.566… 0.85… 0.28… 0.442…
-##  4  3.00 43468 Thursday 0.58… 0.514… 0.44… 0.20… 0.476… 0.45… 0.25… 0.673…
-##  5  4.00 43469 Friday   0.625 0.598… 0.59… 0.17… 0.635… 0.86… 2.25… 0.263…
-##  6  5.00 43470 Saturday 0.66… 0.835… 0.19… 0.90… 0.702… 0.57… 0.64… 0.483…
-##  7  6.00 43471 Sunday   0.70… 0.470… 0.33… 0.84… 0.590… 0.42… 0.98… 0.660…
-##  8  7.00 43472 Monday   0.75  0.555… 0.52… 0.51… 0.970… 0.32… 0.11… 0.452…
-##  9  8.00 43473 Tuesday  0.79… 0.109… 0.47… 0.63… 8.567… 0.46… 3.29… 0.499…
-## 10  9.00 43474 Wednesd… 0.83… 0.953… 0.71… 0.90… 0.393… 0.71… 0.68… 8.039…
-## 11 10.0  43475 Thursday 0.875 0.473… 0.28… 0.38… 0.440… 0.11… 0.51… 0.702…
+##  2  1.00 43466 Tuesday  0.5   0.467… 0.80… 0.30… 0.475… 5.98… 0.78… 0.843…
+##  3  2.00 43467 Wednesd… 0.54… 0.822… 0.51… 0.27… 1.791… 0.80… 0.21… 0.469…
+##  4  3.00 43468 Thursday 0.58… 0.891… 0.63… 0.51… 0.794… 0.74… 0.35… 0.281…
+##  5  4.00 43469 Friday   0.625 0.247… 0.13… 0.93… 0.951… 0.35… 0.86… 0.480…
+##  6  5.00 43470 Saturday 0.66… 0.286… 0.35… 0.47… 0.364… 6.03… 7.35… 6.769…
+##  7  6.00 43471 Sunday   0.70… 0.416… 0.98… 0.64… 0.667… 0.48… 0.76… 0.927…
+##  8  7.00 43472 Monday   0.75  0.401… 0.58… 5.40… 0.608… 0.89… 0.39… 9.688…
+##  9  8.00 43473 Tuesday  0.79… 0.643… 0.87… 0.67… 0.602… 0.77… 0.52… 0.659…
+## 10  9.00 43474 Wednesd… 0.83… 0.657… 0.39… 0.37… 0.870… 0.30… 0.51… 0.898…
+## 11 10.0  43475 Thursday 0.875 0.749… 0.47… 0.88… 0.820… 0.10… 2.90… 0.423…
 ## # ... with 2 more variables: X__7 &lt;chr&gt;, X__8 &lt;chr&gt;</code></pre>
 <p>a mess.</p>
-<p>The first row has been set as the column names with blank names assinged as <code>X__*</code> by <code>readxl</code>. Also every column has a character class because the second row headers have been considered as data.</p>
+<p>The first row has been set as the column names with blank names assigned as <code>X__*</code> by <code>readxl</code>. Also every column has a character class because the second row headers have been considered as data.</p>
 <hr />
 </div>
 <div id="building-our-own-column-names-with-code" class="section level2">
@@ -210,11 +209,12 @@ head1</code></pre>
 <pre class="r"><code>head2 &lt;- read_excel(path, skip = 1, col_names = TRUE) %&gt;% 
   names() %&gt;% 
   str_replace(&quot;X__\\d*&quot;, NA_character_)
+
 head2</code></pre>
 <pre><code>##  [1] NA           &quot;DATE&quot;       NA           &quot;TIME&quot;       &quot;METRIC1&quot;   
 ##  [6] &quot;METRIC2&quot;    &quot;METRIC3&quot;    &quot;METRIC1__1&quot; &quot;METRIC2__1&quot; &quot;METRIC3__1&quot;
 ## [11] &quot;METRIC1__2&quot; &quot;METRIC2__2&quot; &quot;METRIC3__2&quot;</code></pre>
-<p>Because we had non-unique column names in this case <code>read_excel</code> has assinged some <code>__*</code> patterns to the metric names which we also want to get rid of.</p>
+<p>Because we had non-unique column names in this case <code>read_excel</code> has assigned some <code>__*</code> patterns to the metric names which we also want to get rid of.</p>
 <pre class="r"><code>head2 &lt;- head2 %&gt;% str_remove(&quot;__\\d*&quot;)
 head2</code></pre>
 <pre><code>##  [1] NA        &quot;DATE&quot;    NA        &quot;TIME&quot;    &quot;METRIC1&quot; &quot;METRIC2&quot; &quot;METRIC3&quot;
@@ -268,16 +268,16 @@ raw_data</code></pre>
 <pre><code>## # A tibble: 10 x 13
 ##       ID DATE                WEEKDAY   TIME                GROUP1_METRIC1
 ##    &lt;dbl&gt; &lt;dttm&gt;              &lt;chr&gt;     &lt;dttm&gt;                       &lt;dbl&gt;
-##  1  1.00 2019-01-01 00:00:00 Tuesday   1899-12-31 12:00:00          0.562
-##  2  2.00 2019-01-02 00:00:00 Wednesday 1899-12-31 13:00:00          0.799
-##  3  3.00 2019-01-03 00:00:00 Thursday  1899-12-31 14:00:00          0.514
-##  4  4.00 2019-01-04 00:00:00 Friday    1899-12-31 15:00:00          0.599
-##  5  5.00 2019-01-05 00:00:00 Saturday  1899-12-31 16:00:00          0.836
-##  6  6.00 2019-01-06 00:00:00 Sunday    1899-12-31 17:00:00          0.471
-##  7  7.00 2019-01-07 00:00:00 Monday    1899-12-31 18:00:00          0.556
-##  8  8.00 2019-01-08 00:00:00 Tuesday   1899-12-31 19:00:00          0.109
-##  9  9.00 2019-01-09 00:00:00 Wednesday 1899-12-31 20:00:00          0.953
-## 10 10.0  2019-01-10 00:00:00 Thursday  1899-12-31 21:00:00          0.474
+##  1  1.00 2019-01-01 00:00:00 Tuesday   1899-12-31 12:00:00          0.468
+##  2  2.00 2019-01-02 00:00:00 Wednesday 1899-12-31 13:00:00          0.822
+##  3  3.00 2019-01-03 00:00:00 Thursday  1899-12-31 14:00:00          0.891
+##  4  4.00 2019-01-04 00:00:00 Friday    1899-12-31 15:00:00          0.248
+##  5  5.00 2019-01-05 00:00:00 Saturday  1899-12-31 16:00:00          0.286
+##  6  6.00 2019-01-06 00:00:00 Sunday    1899-12-31 17:00:00          0.416
+##  7  7.00 2019-01-07 00:00:00 Monday    1899-12-31 18:00:00          0.402
+##  8  8.00 2019-01-08 00:00:00 Tuesday   1899-12-31 19:00:00          0.643
+##  9  9.00 2019-01-09 00:00:00 Wednesday 1899-12-31 20:00:00          0.657
+## 10 10.0  2019-01-10 00:00:00 Thursday  1899-12-31 21:00:00          0.750
 ## # ... with 8 more variables: GROUP1_METRIC2 &lt;dbl&gt;, GROUP1_METRIC3 &lt;dbl&gt;,
 ## #   GROUP2_METRIC1 &lt;dbl&gt;, GROUP2_METRIC2 &lt;dbl&gt;, GROUP2_METRIC3 &lt;dbl&gt;,
 ## #   GROUP3_METRIC1 &lt;dbl&gt;, GROUP3_METRIC2 &lt;dbl&gt;, GROUP3_METRIC3 &lt;dbl&gt;</code></pre>
@@ -299,16 +299,16 @@ tidy_data</code></pre>
 <pre><code>## # A tibble: 30 x 8
 ##       ID DATE       WEEKDAY   TIME   GROUP  METRIC1 METRIC2 METRIC3
 ##    &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt;     &lt;time&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1  1.00 2019-01-01 Tuesday   12:00  GROUP1   0.562  0.0435   0.232
-##  2  1.00 2019-01-01 Tuesday   12:00  GROUP2   0.666  0.611    0.958
-##  3  1.00 2019-01-01 Tuesday   12:00  GROUP3   0.206  0.104    0.201
-##  4  2.00 2019-01-02 Wednesday 13:00  GROUP1   0.799  0.761    0.670
-##  5  2.00 2019-01-02 Wednesday 13:00  GROUP2   0.567  0.857    0.282
-##  6  2.00 2019-01-02 Wednesday 13:00  GROUP3   0.442  0.868    0.696
-##  7  3.00 2019-01-03 Thursday  14:00  GROUP1   0.514  0.444    0.204
-##  8  3.00 2019-01-03 Thursday  14:00  GROUP2   0.477  0.457    0.254
-##  9  3.00 2019-01-03 Thursday  14:00  GROUP3   0.673  0.149    0.408
-## 10  4.00 2019-01-04 Friday    15:00  GROUP1   0.599  0.597    0.172
+##  1  1.00 2019-01-01 Tuesday   12:00  GROUP1  0.468   0.810    0.310
+##  2  1.00 2019-01-01 Tuesday   12:00  GROUP2  0.476   0.0598   0.781
+##  3  1.00 2019-01-01 Tuesday   12:00  GROUP3  0.844   0.423    0.409
+##  4  2.00 2019-01-02 Wednesday 13:00  GROUP1  0.822   0.511    0.277
+##  5  2.00 2019-01-02 Wednesday 13:00  GROUP2  0.0179  0.802    0.212
+##  6  2.00 2019-01-02 Wednesday 13:00  GROUP3  0.470   0.124    0.278
+##  7  3.00 2019-01-03 Thursday  14:00  GROUP1  0.891   0.638    0.519
+##  8  3.00 2019-01-03 Thursday  14:00  GROUP2  0.795   0.749    0.360
+##  9  3.00 2019-01-03 Thursday  14:00  GROUP3  0.281   0.121    0.354
+## 10  4.00 2019-01-04 Friday    15:00  GROUP1  0.248   0.131    0.935
 ## # ... with 20 more rows</code></pre>
 <hr />
 </div>
@@ -322,9 +322,9 @@ tidy_data %&gt;%
 <pre><code>## # A tibble: 3 x 4
 ##   GROUP  METRIC1 METRIC2 METRIC3
 ##   &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-## 1 GROUP1   0.587   0.438   0.546
-## 2 GROUP2   0.553   0.540   0.450
-## 3 GROUP3   0.446   0.473   0.415</code></pre>
+## 1 GROUP1   0.558   0.576   0.514
+## 2 GROUP2   0.617   0.459   0.452
+## 3 GROUP3   0.515   0.313   0.494</code></pre>
 <p>and this…</p>
 <pre class="r"><code>ggplot(tidy_data, aes(x = METRIC1, y = METRIC2, colour = GROUP)) +
   geom_point(aes(size = METRIC3))</code></pre>

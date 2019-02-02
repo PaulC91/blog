@@ -3,6 +3,7 @@ title: Tidying Multi-Header Excel Data with R
 author: Paul Campbell
 date: '2019-02-01'
 slug: tidying-multi-header-excel-data-with-r
+excerpt: "Turn inconsistently multi-headered excel data into a tidy data frame in R."
 categories:
   - R
 tags:
@@ -11,17 +12,20 @@ tags:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
-                      fig.align = "center", cache = TRUE)
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE, 
+                      message = FALSE,
+                      fig.align = "center", 
+                      cache = FALSE)
 ```
 
 ## Problem
 
-If, like me, you're lucky enough to work with a lot of data that arrives in the form of excel tables, you will most likely be familiar with data in the format below.
+If you're lucky enough to work with a lot of data that arrives in the form of excel tables, you will most likely be familiar with data in the format below.
 
 <img src="/img/multi_header.png"/>
 
-This format makes it easier for a human eye to read the data, but seriously hinders a computers ability to analyse it. So, if you prefer anaylsing and visualising your data with a programming language rather than staring at it in Excel we're going to need to knock it into a _tidier_ form before we can let the powers of R loose on it.
+This format makes it easier for a human eye to read the data, but seriously hinders a computers ability to analyse it. So, if you prefer analysing and visualising your data with a programming language rather than staring at it in Excel we're going to need to knock it into a _tidier_ form before we can let the powers of R loose on it.
 
 That means one column for each variable and one row for each observation of said variables. For this sample data set I would define that as columns for:
 
@@ -36,11 +40,11 @@ That means one column for each variable and one row for each observation of said
 
 Currently we have the metrics for each group spread out over 3 chunks with the group indicated by a top header (only in the first column of that group) and the metric headers below. Adding fuel to the fire, in the first chunk of columns you'll notice the `ID` and `WEEKDAY` columns are floating up in row one with the others down in row 2 - nice.
 
-A data frame in R can only take one set of column names that must be unique from each other so we need a method of reducing these headers into a single row of unique names by merging the group and metric information together with a separator. So group 1's metric columns will be named `GROUP1_METRIC1` `GROUP1_METRIC2` `GROUP1_METRIC3` and so forth for each group.
-
 ---
 
 ## Solution
+
+A data frame in R can only take one set of column names that must be unique from each other so we need a method of reducing these headers into a single row of unique names by merging the group and metric information together with a separator. So group 1's metric columns will be named `GROUP1_METRIC1` `GROUP1_METRIC2` `GROUP1_METRIC3` and so forth for each group.
 
 So let's give it a go. These are the packages required:
 
@@ -61,7 +65,7 @@ raw_data
 
 a mess.
 
-The first row has been set as the column names with blank names assinged as `X__*` by `readxl`. Also every column has a character class because the second row headers have been considered as data.
+The first row has been set as the column names with blank names assigned as `X__*` by `readxl`. Also every column has a character class because the second row headers have been considered as data.
 
 ---
 
@@ -85,10 +89,11 @@ To do the same for the headers in row 2 we do the same thing but add a `skip = 1
 head2 <- read_excel(path, skip = 1, col_names = TRUE) %>% 
   names() %>% 
   str_replace("X__\\d*", NA_character_)
+
 head2
 ```
 
-Because we had non-unique column names in this case `read_excel` has assinged some `__*` patterns to the metric names which we also want to get rid of.
+Because we had non-unique column names in this case `read_excel` has assigned some `__*` patterns to the metric names which we also want to get rid of.
 
 ```{r}
 head2 <- head2 %>% str_remove("__\\d*")
