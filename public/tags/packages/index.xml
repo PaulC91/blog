@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Packages on Paul Campbell</title>
+    <title>packages on Paul Campbell</title>
     <link>/tags/packages/</link>
-    <description>Recent content in Packages on Paul Campbell</description>
+    <description>Recent content in packages on Paul Campbell</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 04 Nov 2018 00:00:00 +0000</lastBuildDate>

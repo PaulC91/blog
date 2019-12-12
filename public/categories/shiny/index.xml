@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Shiny on Paul Campbell</title>
@@ -27,9 +27,9 @@
       
       <guid>/2018/03/14/auto-resize-shiny-apps-in-iframes/</guid>
       <description>Add this to your shiny app UI:
-tags$head( tags$script(src=&amp;quot;https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.contentWindow.min.js&amp;quot;, type=&amp;quot;text/javascript&amp;quot;) ),  Add this to the parent HTML page you are embedding the shiny app in:
-&amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;style&amp;gt; iframe { width: 1px; min-width: 100%; } &amp;lt;/style&amp;gt; &amp;lt;iframe id=&amp;quot;myIframe&amp;quot; src=&amp;quot;YOUR_SHINYAPP_URL&amp;quot; scrolling=&amp;quot;no&amp;quot; frameborder=&amp;quot;no&amp;quot;&amp;gt;&amp;lt;/iframe&amp;gt; &amp;lt;script&amp;gt; iFrameResize({ log:true, inPageLinks:true, heightCalculationMethod: &#39;lowestElement&#39; }); &amp;lt;/script&amp;gt;  Example (try resizing the browser):
-  iframe { width: 1px; min-width: 100%; }    iFrameResize({ log:true, inPageLinks:true, heightCalculationMethod: &#39;documentElementScroll&#39; });  There&amp;rsquo;s a slight glitch in that if you force an increase in iframe height by narrowing the browser but then widen it again, the iframe height remains at the longer length despite the all the elements in the app returning to 1 row.</description>
+tags$head( tags$script(src=&amp;quot;https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.contentWindow.min.js&amp;quot;, type=&amp;quot;text/javascript&amp;quot;) ), Add this to the parent HTML page you are embedding the shiny app in:
+&amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;style&amp;gt; iframe { width: 1px; min-width: 100%; } &amp;lt;/style&amp;gt; &amp;lt;iframe id=&amp;quot;myIframe&amp;quot; src=&amp;quot;YOUR_SHINYAPP_URL&amp;quot; scrolling=&amp;quot;no&amp;quot; frameborder=&amp;quot;no&amp;quot;&amp;gt;&amp;lt;/iframe&amp;gt; &amp;lt;script&amp;gt; iFrameResize({ log:true, inPageLinks:true, heightCalculationMethod: &#39;lowestElement&#39; }); &amp;lt;/script&amp;gt; Example (try resizing the browser):
+There&#39;s a slight glitch in that if you force an increase in iframe height by narrowing the browser but then widen it again, the iframe height remains at the longer length despite the all the elements in the app returning to 1 row.</description>
     </item>
     
   </channel>

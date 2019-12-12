@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Paul Campbell</title>
@@ -6,10 +6,37 @@
     <description>Recent content in Tags on Paul Campbell</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Mar 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 01 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>excel</title>
+      <link>/tags/excel/</link>
+      <pubDate>Fri, 01 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/excel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tidydata</title>
+      <link>/tags/tidydata/</link>
+      <pubDate>Fri, 01 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/tidydata/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>packages</title>
+      <link>/tags/packages/</link>
+      <pubDate>Sun, 04 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/packages/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>D3</title>
@@ -21,16 +48,7 @@
     </item>
     
     <item>
-      <title>Excel</title>
-      <link>/tags/excel/</link>
-      <pubDate>Fri, 01 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/excel/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Htmlwidgets</title>
+      <title>htmlwidgets</title>
       <link>/tags/htmlwidgets/</link>
       <pubDate>Thu, 01 Mar 2018 00:00:00 +0000</pubDate>
       
@@ -39,16 +57,7 @@
     </item>
     
     <item>
-      <title>Packages</title>
-      <link>/tags/packages/</link>
-      <pubDate>Sun, 04 Nov 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/packages/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Purrr</title>
+      <title>purrr</title>
       <link>/tags/purrr/</link>
       <pubDate>Thu, 01 Mar 2018 00:00:00 +0000</pubDate>
       
@@ -57,16 +66,7 @@
     </item>
     
     <item>
-      <title>Tidydata</title>
-      <link>/tags/tidydata/</link>
-      <pubDate>Fri, 01 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/tidydata/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Tidygraph</title>
+      <title>tidygraph</title>
       <link>/tags/tidygraph/</link>
       <pubDate>Thu, 01 Mar 2018 00:00:00 +0000</pubDate>
       
